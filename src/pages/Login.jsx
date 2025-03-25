@@ -16,9 +16,10 @@ const Login = () => {
     console.log("Full API Response:", response); // ✅ Debugging
 
     // Correctly extract the values
-    const { token, role } = response.message; 
+    const { token, role, username } = response.message; 
       localStorage.setItem("token", token);
       localStorage.setItem("userRole", role);
+      localStorage.setItem("username", username);
       
       console.log("Received token:", token); // Debugging
       console.log("Received role:", role); // Debugging
