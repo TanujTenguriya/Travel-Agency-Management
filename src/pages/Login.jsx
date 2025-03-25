@@ -11,16 +11,24 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
-
     try {
-      const { token, user } = await loginUser(email, password);
-      localStorage.setItem("token", token); // Save JWT token
-      localStorage.setItem("userRole", user.role); // Save user role
+    const response = await loginUser(email, password);
+    console.log("Full API Response:", response); // ✅ Debugging
 
-      navigate(user.role === "admin" ? "/admin-dashboard" : "/user-dashboard"); // Redirect based on role
-    } catch (error) {
+    // Correctly extract the values
+    const { token, role } = response.message; 
+      localStorage.setItem("token", token);
+      localStorage.setItem("userRole", role);
+      
+      console.log("Received token:", token); // Debugging
+      console.log("Received role:", role); // Debugging
+      const redirectPath = role === "admin" ? "/admin-dashboard" : "/user-dashboard";
+      console.log("Redirecting to:", redirectPath); // ✅ Debugging step
+      navigate(redirectPath);
+  } catch (error) {
       setError("Login failed! Invalid credentials.");
-    }
+  }
+  
   };
 
   return (
