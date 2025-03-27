@@ -61,25 +61,36 @@ export const createPackage = async (packageData) => {
 };
 
 
-// Update an existing package
+// Update an existing package (Admin only)
 export const updatePackage = async (packageId, updatedData) => {
   try {
-    const response = await API.put(`/packages/${packageId}`, updatedData);
+    const response = await API.put(`/packages/${packageId}`, {
+      ...updatedData,
+      role: "admin", // Manually sending role like in createPackage
+    }, {
+      headers: { "Content-Type": "application/json" }
+    });
     return response.data.data;
   } catch (error) {
-    console.error("Error updating package:", error);
+    console.error("❌ Error updating package:", error.response?.data || error.message);
     throw error;
   }
 };
 
-// Delete a package
+// Delete a package (Admin only)
 export const deletePackage = async (packageId) => {
   try {
-    const response = await API.delete(`/packages/${packageId}`);
+    console.log(`📡 Deleting package with ID: ${packageId}`);
+    const response = await API.delete(`/packages/${packageId}`, {
+      data: { role: "admin" }, // Ensuring role is passed in DELETE request body
+      headers: { "Content-Type": "application/json" }
+    });
+    console.log("✅ Package deleted successfully:", response.data.message);
     return response.data.message;
   } catch (error) {
-    console.error("Error deleting package:", error);
+    console.error("❌ Error deleting package:", error.response?.data || error.message);
     throw error;
   }
 };
+
 
