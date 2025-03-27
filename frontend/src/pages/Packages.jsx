@@ -249,8 +249,8 @@ const Packages = () => {
             return (
               <div key={pkg._id} className="bg-white rounded-lg shadow-lg overflow-hidden">
                 {/* Image (if available) */}
-                {pkg.imageUrl ? (
-                  <img src={pkg.imageUrl} alt={pkg.packageName} className="w-full h-52 object-cover" />
+                {pkg.image ? (
+                  <img src={pkg.image} alt={pkg.packageName} className="w-full h-52 object-cover" />
                 ) : (
                   <div className="w-full h-52 bg-gray-200 flex items-center justify-center text-gray-500">
                     No Image Available
