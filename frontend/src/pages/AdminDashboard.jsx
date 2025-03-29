@@ -1,29 +1,3 @@
-// import React from "react";
-// import { useNavigate } from "react-router-dom";
-
-// const AdminDashboard = () => {
-//   const navigate = useNavigate();
-
-//   const handleLogout = () => {
-//     localStorage.removeItem("token");
-//     localStorage.removeItem("userRole");
-//     navigate("/");
-//   };
-
-//   return (
-//     <div className="h-screen flex flex-col items-center justify-center">
-//       <h1 className="text-3xl font-bold mb-4">Admin Dashboard</h1>
-//       <button
-//         onClick={handleLogout}
-//         className="bg-red-600 text-white px-4 py-2 rounded"
-//       >
-//         Logout
-//       </button>
-//     </div>
-//   );
-// };
-
-// export default AdminDashboard;
 import React from "react";
 import { useNavigate, Link } from "react-router-dom";
 
@@ -64,9 +38,18 @@ const AdminDashboard = () => {
   <Link to="/admin/manage-packages" className="bg-blue-600 text-white px-4 py-2 rounded">
     Manage Packages
   </Link>
-  {/* <Link to="/admin/manage-bookings" className="bg-green-600 text-white px-4 py-2 rounded">
-    Manage Bookings
-  </Link> */}
+  <Link to="/admin/manage-flights" className="bg-green-600 text-white px-4 py-2 rounded">
+    Manage Flights
+  </Link>
+  <Link to="/admin/manage-trains" className="bg-green-600 text-white px-4 py-2 rounded">
+    Manage Trains
+  </Link>
+  <Link to="/admin/manage-buses" className="bg-green-600 text-white px-4 py-2 rounded">
+    Manage Bus
+  </Link>
+  <Link to="/admin/manage-hotels" className="bg-green-600 text-white px-4 py-2 rounded">
+    Manage Hotels
+  </Link>
 </div>
 
 

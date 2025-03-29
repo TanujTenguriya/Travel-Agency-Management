@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getTrains } from "../api/trainService";
-
+import { Link } from "react-router-dom";
 const Train = () => {
   const [trains, setTrains] = useState([]);
   const [from, setFrom] = useState("");
@@ -110,33 +110,54 @@ const Train = () => {
         <p className="text-center text-gray-500 mt-6">No trains available.</p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-          {filteredAndSortedTrains.map((train) => (
-            <div key={train._id} className="bg-white rounded-lg shadow-lg overflow-hidden">
-              <div className="p-4">
-                {/* Train Name */}
-                <h3 className="text-lg font-bold">{train.trainName}</h3>
+  {filteredAndSortedTrains.map((train) => (
+    <div key={train._id} className="bg-white rounded-lg shadow-lg overflow-hidden">
+      <div className="p-4">
+        {/* Train Name */}
+        <h3 className="text-lg font-bold">{train.trainName}</h3>
 
-                {/* Route */}
-                <p className="text-gray-600 mt-1">
-                  <strong>Route:</strong> {train.from} → {train.to}
-                </p>
+        {/* Route */}
+        <p className="text-gray-600 mt-1">
+          <strong>Route:</strong> {train.from} → {train.to}
+        </p>
 
-                {/* Duration */}
-                <p className="text-gray-600"><strong>Duration:</strong> {train.duration} hrs</p>
+        {/* Departure & Arrival Time */}
+        <p className="text-gray-600">
+          <strong>Departure:</strong> {train.departureTime}
+        </p>
+        <p className="text-gray-600">
+          <strong>Arrival:</strong> {train.arrivalTime}
+        </p>
 
-                {/* Price */}
-                <div className="flex justify-between items-center mt-4">
-                  <p className="text-xl font-bold text-gray-800">₹{train.price}</p>
-                </div>
+        {/* Duration */}
+        <p className="text-gray-600">
+          <strong>Duration:</strong> {train.duration}
+        </p>
+        <p className="text-gray-600">
+        <strong>Date:</strong> {departureDate}
+        </p>
 
-                {/* Booking Button */}
-                <button className="mt-4 w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
-                  Book Now
-                </button>
-              </div>
-            </div>
-          ))}
+        {/* Price & Seats Available */}
+        <div className="flex justify-between items-center mt-4">
+          <p className="text-xl font-bold text-gray-800">₹{train.price}</p>
+          <p className="text-sm text-gray-700">
+            <strong>Seats Available:</strong> {train.seatsAvailable}
+          </p>
         </div>
+
+        {/* Booking Button */}
+        <Link 
+          to="/payment" 
+          state={{ amount: train.price }} // Pass amount as state
+          >
+          <button className="mt-4 w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
+           Book Now
+          </button>
+          </Link>
+      </div>
+    </div>
+  ))}
+</div>
       )}
     </div>
   );

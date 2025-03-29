@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getFlights } from "../api/flightService";
-
+import { Link } from "react-router-dom";
 const Flights = () => {
   const [flights, setFlights] = useState([]);
   const [from, setFrom] = useState("");
@@ -33,7 +33,6 @@ const Flights = () => {
     .filter((flight) => {
       if (from.trim() && !flight.from.toLowerCase().includes(from.toLowerCase())) return false;
       if (to.trim() && !flight.to.toLowerCase().includes(to.toLowerCase())) return false;
-      if (departure && flight.departureDate !== departure) return false;
       return true;
     })
     .sort((a, b) => {
@@ -117,15 +116,22 @@ const Flights = () => {
                 <h3 className="text-lg font-bold">{flight.airline}</h3>
                 <p className="text-gray-600"><strong>From:</strong> {flight.from}</p>
                 <p className="text-gray-600"><strong>To:</strong> {flight.to}</p>
-                <p className="text-gray-600"><strong>Departure:</strong> {flight.departureDate}</p>
+                <p className="text-gray-600"><strong>Date:</strong> {departure}</p>
+                <p className="text-gray-600"><strong>Departure Time:</strong> {flight.departureTime}</p>
+                <p className="text-gray-600"><strong>Arrival Time:</strong> {flight.arrivalTime}</p>
                 <p className="text-gray-600"><strong>Duration:</strong> {flight.duration} hrs</p>
 
                 {/* Price & Booking Button */}
                 <div className="flex justify-between items-center mt-4">
                   <p className="text-xl font-bold text-gray-800">₹{flight.price}</p>
-                  <button className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700">
-                    Book Now
-                  </button>
+                  <Link 
+                        to="/payment" 
+                        state={{ amount: flight.price }} // Pass amount as state
+                        >
+                        <button className="mt-4 w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
+                        Book Now
+                        </button>
+                    </Link>
                 </div>
               </div>
             </div>

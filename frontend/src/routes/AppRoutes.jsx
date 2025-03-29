@@ -14,7 +14,11 @@ import Flights from "../pages/Flights";
 import Train from "../pages/Train";
 import Bus from "../pages/Bus";
 import Hotel from "../pages/Hotel";
-// import ManageBookings from "../pages/ManageBookings"
+import ManageFlights from "../pages/ManageFlights"
+import ManageBuses from "../pages/ManageBus";
+import ManageHotels from "../pages/ManageHotel";
+import ManageTrains from "../pages/ManageTrains";
+import Payment from "../pages/Payment";
 const AppRoutes = () => {
   return (
     <Routes>
@@ -28,6 +32,7 @@ const AppRoutes = () => {
       <Route path="/trains" element={<Train/>} />
       <Route path="/buses" element={<Bus/>} />
       <Route path="/hotels" element={<Hotel/>} />
+      <Route path="/payment" element={<Payment/>} />
       <Route element={<ProtectedRoute allowedRoles={["user", "admin"]} />}>
         <Route path="/booking" element={<Booking />} />
         <Route path="/user-dashboard" element={<UserDashboard />} />
@@ -35,7 +40,10 @@ const AppRoutes = () => {
       <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
         <Route path="/admin/manage-packages" element={<ManagePackages />} />
-        {/* <Route path="/admin/manage-bookings" element={<ManageBookings />} /> */}
+        <Route path="/admin/manage-flights" element={<ManageFlights />} />
+        <Route path="/admin/manage-buses" element={<ManageBuses />} />
+        <Route path="/admin/manage-hotels" element={<ManageHotels />} />
+        <Route path="/admin/manage-trains" element={<ManageTrains />} />
       </Route>
     </Routes>
   );
