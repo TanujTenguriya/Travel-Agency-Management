@@ -6,7 +6,8 @@ const HotelSchema = new mongoose.Schema({
     address: { type: String, required: true },
     pricePerNight: { type: Number, required: true },
     rating: { type: Number, required: true },
-    availableRooms: { type: Number, required: true }
+    availableRooms: { type: Number, required: true },
+    images: { type: [String], default: [] }
 }, { timestamps: true });
 
 export default mongoose.model("Hotel", HotelSchema);
