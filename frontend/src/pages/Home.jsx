@@ -6,7 +6,7 @@ const Home = () => {
       <h1 className="text-4xl font-bold mb-4">Welcome to Travel Agency</h1>
       <p className="text-gray-700">Plan your perfect trip with us.</p>
       <footer className="mt-10 text-gray-500">
-        © 2025 Travel Agency. All Rights Reserved.
+        © 2025 Travel Agency.
       </footer>
     </div>
   );
