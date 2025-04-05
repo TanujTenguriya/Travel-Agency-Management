@@ -170,102 +170,11 @@ import { FaPlane, FaHotel, FaTrain, FaBus,  FaUserCircle,FaGlobeEurope } from "r
 
 const Home = () => {
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* 🔹 Navbar */}
-      <header className="bg-white shadow-md p-4 flex items-center justify-between px-8">
-       
-        <div className="flex space-x-6 text-lg">
-          <Link to="/flights" className="flex items-center space-x-1 text-gray-700 hover:text-blue-600">
-            <FaPlane /> <span>Flights</span>
-          </Link>
-          <Link to="/hotels" className="flex items-center space-x-1 text-gray-700 hover:text-blue-600">
-            <FaHotel /> <span>Hotels</span>
-          </Link>
-          <Link to="/trains" className="flex items-center space-x-1 text-gray-700 hover:text-blue-600">
-            <FaTrain /> <span>Trains</span>
-          </Link>
-          <Link to="/buses" className="flex items-center space-x-1 text-gray-700 hover:text-blue-600">
-            <FaBus /> <span>Buses</span>
-          </Link>
-          <Link to="/packages" className="flex items-center space-x-1 text-gray-700 hover:text-blue-600">
-            <FaGlobeEurope /> <span>Holiday Packages</span>
-          </Link>
-        
-        </div>
-        
-      </header>
-
-      {/* 🔹 Hero Section */}
-      <div className="relative h-96 bg-cover bg-center" style={{ backgroundImage: "url('/mnt/data/image.png')" }}>
-        <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-center px-4">
-          <h1 className="text-white text-5xl font-extrabold">Find Your Next Adventure</h1>
-          <p className="text-gray-300 text-lg mt-2">Book flights, hotels, and transport at the best prices</p>
-          <Link to="/booking">
-  <button className="mt-4 bg-yellow-400 text-black px-6 py-3 rounded-full font-bold text-lg hover:bg-yellow-500 transition-all">
-    Explore Now
-  </button>
-</Link>
-
-        </div>
-      </div>
-
-      {/* 🔹 Search Section */}
-      {/* <div className="max-w-5xl mx-auto mt-8 bg-white p-8 rounded-lg shadow-lg">
-        <h2 className="text-3xl font-bold mb-6 text-center text-blue-600">Search for the Best Deals</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <input
-            type="text"
-            placeholder="From (e.g., Delhi)"
-            className="p-3 border rounded w-full text-lg"
-          />
-          <input
-            type="text"
-            placeholder="To (e.g., Bengaluru)"
-            className="p-3 border rounded w-full text-lg"
-          />
-          <input
-            type="date"
-            className="p-3 border rounded w-full text-lg"
-          />
-          <select className="p-3 border rounded w-full text-lg">
-            <option>1 Traveler</option>
-            <option>2 Travelers</option>
-            <option>3 Travelers</option>
-          </select>
-          <select className="p-3 border rounded w-full text-lg">
-            <option>Economy</option>
-            <option>Business</option>
-          </select>
-          <button className="col-span-1 md:col-span-3 bg-blue-600 text-white py-3 rounded-lg text-xl hover:bg-blue-700">
-            🔍 Search
-          </button>
-        </div>
-      </div> */}
-
-      {/* 🔹 Features Section */}
-      <div className="max-w-6xl mx-auto mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-        <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
-          <FaPlane className="text-blue-500 text-5xl mx-auto mb-4" />
-          <h3 className="text-xl font-bold">Best Flight Deals</h3>
-          <p className="text-gray-600 mt-2">Compare and book flights with ease</p>
-        </div>
-        <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
-          <FaHotel className="text-blue-500 text-5xl mx-auto mb-4" />
-          <h3 className="text-xl font-bold">Luxury & Budget Hotels</h3>
-          <p className="text-gray-600 mt-2">Find hotels that fit your needs</p>
-        </div>
-        <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
-    <FaBus className="text-blue-500 text-5xl mx-auto mb-4" />
-    <h3 className="text-xl font-bold">Comfortable Bus Trips</h3>
-    <p className="text-gray-600 mt-2">Explore intercity travel options by bus</p>
-  </div>
-
-      </div>
-
-      {/* 🔹 Footer */}
-      <footer className="mt-16 bg-gray-900 text-gray-400 text-center py-6">
-       
-        <p className="mt-2">Made with ❤️ for Travelers</p>
+    <div className="min-h-screen flex flex-col items-center justify-center text-center p-6">
+      <h1 className="text-4xl font-bold mb-4">Welcome to Travel Agency</h1>
+      <p className="text-gray-700">Plan your perfect trip with us.</p>
+      <footer className="mt-10 text-gray-500">
+        © 2025 Travel Agency. All Rights Reserved.
       </footer>
     </div>
   );
