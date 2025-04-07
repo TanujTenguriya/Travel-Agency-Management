@@ -170,7 +170,6 @@ import { FaPlane, FaHotel, FaTrain, FaBus,  FaUserCircle,FaGlobeEurope } from "r
 
 const Home = () => {
   return (
-<<<<<<< HEAD
     <div className="min-h-screen bg-gray-50">
       {/* 🔹 Navbar */}
       <header className="bg-white shadow-md p-4 flex items-center justify-between px-8">
