@@ -153,7 +153,10 @@ const Packages = () => {
 
                   <Link 
                     to="/payment" 
-                    state={{ amount: pkg.price }} // Pass amount as state
+                    state={{ amount: pkg.price,
+                      type: "Tour package",
+                      id: pkg._id,
+                     }} // Pass amount as state
                   >
                     <button className="mt-4 w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
                        Book Now

@@ -193,7 +193,7 @@ const Bus = () => {
     });
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-blue-50 to-gray-100 p-6">
+    <div className="min-h-screen bg-gradient-to-r p-6 " style={{backgroundImage: "url('/assets/bus.jpg')"}}>
       {/* 🔹 Title */}
       <h2 className="text-4xl font-extrabold text-center text-blue-600 mb-8 animate-fadeIn">
         🚌 Find Your Perfect Bus
@@ -278,7 +278,10 @@ const Bus = () => {
                 </div>
 
                 {/* 🔹 Book Now Button */}
-                <Link to="/payment" state={{ amount: bus.price }}>
+                <Link to="/payment" state={{ amount: bus.price,
+                    type: "Bus",
+                    id: bus._id,
+                 }}>
                   <button className="mt-6 w-full bg-gradient-to-r from-blue-600 to-blue-800 text-white py-3 rounded-lg shadow-lg transition transform hover:scale-105 hover:shadow-blue-500/50">
                     🚀 Book Now
                   </button>

@@ -52,7 +52,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FaCreditCard, FaCheckCircle } from "react-icons/fa";
-
+import { createBooking } from "../api/bookingService";
 const Payment = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -68,14 +68,40 @@ const Payment = () => {
       setLoading(false);
     }, 2000); // Simulate processing time
   };
-
   useEffect(() => {
+    const storeBooking = async () => {
+      try {
+        const username = localStorage.getItem("username");
+        const email = localStorage.getItem("email");
+        const { amount, id, type } = location.state;
+  
+        // Call the API with booking data
+        await createBooking({
+          username,
+          email,
+          price: amount,
+          type,
+          foreignKey: id,
+        });
+  
+        // Redirect after booking
+        setTimeout(() => {
+          navigate("/");
+        }, 1500);
+      } catch (error) {
+        console.error("Failed to store booking:", error);
+        alert(
+          "✅ Payment succeeded but booking couldn't be saved. Please contact support."
+        );
+      }
+    };
+  
     if (paymentCompleted) {
-      setTimeout(() => {
-        navigate("/");
-      }, 1500);
+      storeBooking();
     }
-  }, [paymentCompleted, navigate]);
+  }, [paymentCompleted, location.state, navigate]);
+  
+  
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-50 to-gray-100">

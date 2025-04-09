@@ -189,7 +189,7 @@ const Flights = () => {
     });
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-500 to-purple-600 p-6">
+    <div className="min-h-screen bg-gradient-to-br bg-black p-6" style={{backgroundImage: "url('/assets/flight.jpg')"}}>
       <motion.h2
         className="text-4xl font-bold text-center text-white mb-6"
         initial={{ opacity: 0, y: -20 }}
@@ -292,7 +292,10 @@ const Flights = () => {
 
                 <div className="flex justify-between items-center mt-4">
                   <p className="text-2xl font-bold text-blue-700">₹{flight.price}</p>
-                  <Link to="/payment" state={{ amount: flight.price }}>
+                  <Link to="/payment" state={{ amount: flight.price,
+                    type: "Flight",
+                    id: flight._id,
+                   }}>
                     <motion.button
                       className="mt-4 bg-gradient-to-r from-yellow-400 to-yellow-600 text-white py-2 px-4 rounded hover:scale-105 transition"
                       whileHover={{ scale: 1.1 }}

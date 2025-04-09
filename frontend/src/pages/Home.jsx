@@ -196,9 +196,12 @@ const Home = () => {
       </header>
 
       {/* 🔹 Hero Section */}
-      <div className="relative h-96 bg-cover bg-center" style={{ backgroundImage: "url('/mnt/data/image.png')" }}>
-        <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-center px-4">
-          <h1 className="text-white text-5xl font-extrabold">Find Your Next Adventure</h1>
+      <div className="relative h-96 bg-cover bg-center" style={{ backgroundImage: "url('/assets/Home.jpg')" }}>
+        <div className="absolute inset-0  bg-opacity-50 flex flex-col items-center justify-center text-center px-4">
+          <h1 className="text-black text-5xl font-extrabold">Find Your Next Adventure
+         
+  
+          </h1>
           <p className="text-gray-300 text-lg mt-2">Book flights, hotels, and transport at the best prices</p>
           <Link to="/booking">
   <button className="mt-4 bg-yellow-400 text-black px-6 py-3 rounded-full font-bold text-lg hover:bg-yellow-500 transition-all">

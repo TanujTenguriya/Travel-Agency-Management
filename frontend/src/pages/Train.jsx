@@ -328,7 +328,10 @@ const Train = () => {
                   <strong>Seats:</strong> {train.seatsAvailable}
                 </p>
               </div>
-              <Link to="/payment" state={{ amount: train.price }}>
+              <Link to="/payment" state={{ amount: train.price,
+                type: "Train",
+                id: train._id,
+               }}>
                 <button className="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold transition duration-300">
                   Book Now
                 </button>

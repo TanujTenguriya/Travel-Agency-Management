@@ -1,11 +1,68 @@
 import API from "./axiosConfig";
 
-export const getUserBookings = async (userId) => {
+// ✅ Get bookings for a specific user by email
+export const getUserBookings = async (email) => {
   try {
-    const response = await API.get(`/bookings/${userId}`);
+    const response = await API.get(`/bookings?email=${email}`);
     return response.data;
   } catch (error) {
-    console.error("Error fetching bookings:", error);
+    console.error("Error fetching user bookings:", error);
     return [];
   }
 };
+
+// ✅ Get all bookings (admin)
+export const getAllBookings = async () => {
+  try {
+    const response = await API.get("/bookings");
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching all bookings:", error);
+    return [];
+  }
+};
+
+// ✅ Get a single booking by ID
+export const getBookingById = async (id) => {
+  try {
+    const response = await API.get(`/bookings/${id}`);
+    return response.data?.data;
+  } catch (error) {
+    console.error("Error fetching booking by ID:", error);
+    return null;
+  }
+};
+
+// ✅ Create a new booking
+export const createBooking = async (bookingData) => {
+  try {
+    const response = await API.post("/bookings", bookingData);
+    return response.data?.data;
+  } catch (error) {
+    console.error("Error creating booking:", error);
+    throw error;
+  }
+};
+
+// ✅ Update booking by ID
+export const updateBooking = async (id, updatedData) => {
+  try {
+    const response = await API.put(`/bookings/${id}`, updatedData);
+    return response.data?.data;
+  } catch (error) {
+    console.error("Error updating booking:", error);
+    throw error;
+  }
+};
+
+// ✅ Delete booking by ID
+export const deleteBooking = async (id) => {
+  try {
+    const response = await API.delete(`/bookings/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting booking:", error);
+    throw error;
+  }
+};
+

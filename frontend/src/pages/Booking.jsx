@@ -62,21 +62,21 @@ const Booking = () => {
     <div
       className="h-screen w-full flex flex-col items-center justify-center bg-cover bg-center relative"
       style={{
-        backgroundImage: "url('/booking.png')",
+        backgroundImage: "url('/assets/booking.png')",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
       }}
     >
       {/* 🔹 Dark Overlay for readability */}
-      <div className="absolute inset-0 bg-black bg-opacity-60"></div>
+      <div className="absolute inset-0  bg-opacity-60"></div>
 
       {/* 🔹 Booking Content Section */}
-      <div className="relative z-10 text-center text-white px-6">
+      <div className="relative z-10 text-center text-black px-6">
         <h1 className="text-5xl font-extrabold mb-6 drop-shadow-lg animate-fadeIn">
           ✨ Book Your Perfect Trip ✨
         </h1>
-        <p className="text-lg mb-8 text-gray-300 animate-fadeIn">
+        <p className="text-lg mb-8 text-black-300 animate-fadeIn">
           Get the **best deals** on flights, hotels, trains, and buses.
         </p>
 

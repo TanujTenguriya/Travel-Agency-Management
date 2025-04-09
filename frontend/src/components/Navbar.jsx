@@ -16,10 +16,10 @@ const Navbar = () => {
   };
   const dashboardRoute = userRole === "admin" ? "/admin-dashboard" : "/user-dashboard";
   return (
-    <nav className="bg-blue-600 text-white p-4">
+    <nav className="bg-yellow-600 text-black p-4">
       <div className="container mx-auto flex justify-between items-center">
-        <Link to="/" className="text-2xl font-bold">
-          Travel Agency
+        <Link to="/" className="text-3xl font-bold  ">
+          NexTrip
         </Link>
         <div className="space-x-6 flex items-center">
          

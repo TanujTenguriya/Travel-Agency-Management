@@ -235,7 +235,7 @@ const Hotel = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-blue-400 to-purple-600 p-6 flex flex-col items-center">
+    <div className="min-h-screen bg-gradient-to-r p-6 flex flex-col items-center" style={{backgroundImage: "url('/assets/hotel.jpg')"}} >
       <motion.div
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
@@ -385,15 +385,22 @@ const Hotel = () => {
                     <p className="text-green-600 font-bold">
                       ₹{hotel.pricePerNight} / night
                     </p>
-                    <motion.button
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}
-                      className="mt-4 w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
+                    <motion.div
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
                     >
-                      <Link to="/payment" state={{ amount: hotel.pricePerNight }}>
-                        Book Now
-                      </Link>
-                    </motion.button>
+                    <Link
+                    to="/payment"
+                    state={{
+                    amount: hotel.pricePerNight,
+                    type: "Hotel",
+                    id: hotel._id,
+                    }}
+                    className="mt-4 block text-center w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+                    >
+                     Book Now
+                    </Link>
+                    </motion.div>
                   </div>
                 </motion.div>
               );
