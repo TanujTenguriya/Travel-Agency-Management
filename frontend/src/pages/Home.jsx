@@ -247,23 +247,30 @@ const Home = () => {
 
       {/* 🔹 Features Section */}
       <div className="max-w-6xl mx-auto mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-        <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
-          <FaPlane className="text-blue-500 text-5xl mx-auto mb-4" />
-          <h3 className="text-xl font-bold">Best Flight Deals</h3>
-          <p className="text-gray-600 mt-2">Compare and book flights with ease</p>
-        </div>
-        <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
-          <FaHotel className="text-blue-500 text-5xl mx-auto mb-4" />
-          <h3 className="text-xl font-bold">Luxury & Budget Hotels</h3>
-          <p className="text-gray-600 mt-2">Find hotels that fit your needs</p>
-        </div>
-        <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
-    <FaBus className="text-blue-500 text-5xl mx-auto mb-4" />
-    <h3 className="text-xl font-bold">Comfortable Bus Trips</h3>
-    <p className="text-gray-600 mt-2">Explore intercity travel options by bus</p>
-  </div>
+  <Link to="/flights" className="block">
+    <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition cursor-pointer">
+      <FaPlane className="text-blue-500 text-5xl mx-auto mb-4" />
+      <h3 className="text-xl font-bold">Best Flight Deals</h3>
+      <p className="text-gray-600 mt-2">Compare and book flights with ease</p>
+    </div>
+  </Link>
 
-      </div>
+  <Link to="/hotels" className="block">
+    <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition cursor-pointer">
+      <FaHotel className="text-blue-500 text-5xl mx-auto mb-4" />
+      <h3 className="text-xl font-bold">Luxury & Budget Hotels</h3>
+      <p className="text-gray-600 mt-2">Find hotels that fit your needs</p>
+    </div>
+  </Link>
+
+  <Link to="/buses" className="block">
+    <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition cursor-pointer">
+      <FaBus className="text-blue-500 text-5xl mx-auto mb-4" />
+      <h3 className="text-xl font-bold">Comfortable Bus Trips</h3>
+      <p className="text-gray-600 mt-2">Explore intercity travel options by bus</p>
+    </div>
+  </Link>
+</div>
 
       {/* 🔹 Footer */}
       <footer className="mt-16 bg-gray-900 text-gray-400 text-center py-6">
