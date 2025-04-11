@@ -24,7 +24,21 @@ export const loginUser = async (email, password) => {
 };
 
 // Register User
-export const registerUser = async (username, email, password, role = "user") => {
+// export const registerUser = async (username, email, password, role = "user") => {
+//   try {
+//     const response = await API.post("/users/register", {
+//       username,
+//       email,
+//       password,
+//       role,
+//     });
+//     return response.data;
+//   } catch (error) {
+//     console.error("Registration failed:", error.response?.data || error.message);
+//     throw error;
+//   }
+// };
+export const registerUser = async (username, email, password, role) => {
   try {
     const response = await API.post("/users/register", {
       username,
@@ -34,8 +48,7 @@ export const registerUser = async (username, email, password, role = "user") => 
     });
     return response.data;
   } catch (error) {
-    console.error("Registration failed:", error.response?.data || error.message);
-    throw error;
+    throw error.response.data;
   }
 };
 

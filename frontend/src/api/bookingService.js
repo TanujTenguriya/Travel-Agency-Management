@@ -1,9 +1,9 @@
 import API from "./axiosConfig";
 
 // ✅ Get bookings for a specific user by email
-export const getUserBookings = async (email) => {
+export const getUserBookings = async (username) => {
   try {
-    const response = await API.get(`/bookings?email=${email}`);
+    const response = await API.get(`/bookings?username=${username}`);
     return response.data;
   } catch (error) {
     console.error("Error fetching user bookings:", error);

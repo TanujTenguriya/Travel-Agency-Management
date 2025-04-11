@@ -21,18 +21,39 @@ export const getUser = asyncHandler(async (req, res) => {
 });
 
 // Create user (Register)
-export const createUser = asyncHandler(async (req, res) => {
+// export const createUser = asyncHandler(async (req, res) => {
+//     const { username, email, password, role } = req.body;
+
+//     // Check if email is already registered
+//     const existingUser = await User.findOne({ email });
+//     if (existingUser) throw new ApiError(400, "Email already in use");
+
+//     const user = new User({ username, email, password, role });
+//     await user.save();
+
+//     res.json(new ApiResponse(201, user, "User registered successfully"));
+// });
+export const createUser = async (req, res) => {
     const { username, email, password, role } = req.body;
-
-    // Check if email is already registered
-    const existingUser = await User.findOne({ email });
-    if (existingUser) throw new ApiError(400, "Email already in use");
-
-    const user = new User({ username, email, password, role });
-    await user.save();
-
-    res.json(new ApiResponse(201, user, "User registered successfully"));
-});
+  
+    try {
+      const newUser = new User({ username, email, password, role });
+      await newUser.save();
+      res.status(201).json({ message: "User registered successfully" });
+    } catch (error) {
+      if (error.code === 11000) {
+        const duplicateField = Object.keys(error.keyPattern)[0];
+        const message =
+          duplicateField === "username"
+            ? "Username already exists"
+            : "Email already registered";
+        return res.status(400).json({ message });
+      }
+  
+      res.status(500).json({ message: "Registration failed", error });
+    }
+  };
+  
 
 // Update user
 export const updateUser = asyncHandler(async (req, res) => {

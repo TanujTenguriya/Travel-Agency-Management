@@ -81,6 +81,7 @@ const Register = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [role, setRole] = useState("user");
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -88,15 +89,27 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
-
+  
+    if (password.length !== 8) {
+      setError("❌ Password must be exactly 8 characters.");
+      return;
+    }
+  
     try {
       await registerUser(username, email, password, role);
       alert("🎉 Registration successful! Please log in.");
       navigate("/login");
     } catch (error) {
-      setError("❌ Registration failed! Please try again.");
+      if (error.message === "Username already exists") {
+        setError("❌ This username is already taken. Try another.");
+      } else if (error.message === "Email already registered") {
+        setError("❌ This email is already registered. Try with other email.");
+      } else {
+        setError("❌ Registration failed! Please try again.");
+      }
     }
   };
+  
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-blue-500 to-indigo-600 p-4">
@@ -135,14 +148,38 @@ const Register = () => {
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-          <input
-            type="password"
-            placeholder="Password"
-            className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+          {/* Password Input */}
+          <div className="relative">
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              minLength={8}
+              maxLength={8}
+              className={`w-full p-3 border rounded-lg focus:outline-none transition ${
+                password.length !== 8 ? "focus:ring-red-400 border-red-400" : "focus:ring-blue-400"
+              }`}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword((prev) => !prev)}
+              className="absolute top-1/2 right-3 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+            >
+              {showPassword ? "🙈" : "👁️"}
+            </button>
+          </div>
+          <small
+            className={`block mt-1 text-sm ${
+              password.length !== 8 ? "text-red-500" : "text-green-600"
+            }`}
+          >
+            {password.length !== 8
+              ? "Password must be exactly 8 characters."
+              : "Looks good!"}
+          </small>
+
           <select
             className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
             value={role}

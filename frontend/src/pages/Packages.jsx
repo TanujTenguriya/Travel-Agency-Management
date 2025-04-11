@@ -154,7 +154,7 @@ const Packages = () => {
                   <Link 
                     to="/payment" 
                     state={{ amount: pkg.price,
-                      type: "Tour package",
+                      type: "Package",
                       id: pkg._id,
                      }} // Pass amount as state
                   >
