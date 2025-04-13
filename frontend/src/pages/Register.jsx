@@ -1,82 +1,8 @@
-// import React, { useState } from "react";
-// import { registerUser } from "../api/authService"; // API call function
-// import { useNavigate } from "react-router-dom";
-
-// const Register = () => {
-//   const [username, setUsername] = useState("");
-//   const [email, setEmail] = useState("");
-//   const [password, setPassword] = useState("");
-//   const [role, setRole] = useState("user"); // Default role
-//   const [error, setError] = useState(null);
-//   const navigate = useNavigate();
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     setError(null);
-
-//     try {
-//       await registerUser(username, email, password, role);
-//       alert("Registration successful! Please log in.");
-//       navigate("/login"); // Redirect to login page
-//     } catch (error) {
-//       setError("Registration failed! Try again.");
-//     }
-//   };
-
-//   return (
-//     <div className="flex justify-center items-center h-screen bg-gray-100">
-//       <form className="p-6 bg-white shadow-md rounded w-96" onSubmit={handleSubmit}>
-//         <h2 className="text-2xl font-bold mb-4">Register</h2>
-//         {error && <p className="text-red-500">{error}</p>}
-        
-//         <input
-//           type="text"
-//           placeholder="Username"
-//           className="border p-2 w-full mb-2"
-//           value={username}
-//           onChange={(e) => setUsername(e.target.value)}
-//           required
-//         />
-//         <input
-//           type="email"
-//           placeholder="Email"
-//           className="border p-2 w-full mb-2"
-//           value={email}
-//           onChange={(e) => setEmail(e.target.value)}
-//           required
-//         />
-//         <input
-//           type="password"
-//           placeholder="Password"
-//           className="border p-2 w-full mb-2"
-//           value={password}
-//           onChange={(e) => setPassword(e.target.value)}
-//           required
-//         />
-//         <select
-//           className="border p-2 w-full mb-2"
-//           value={role}
-//           onChange={(e) => setRole(e.target.value)}
-//         >
-//           <option value="user">User</option>
-//           <option value="admin">Admin</option>
-//         </select>
-        
-//         <button type="submit" className="bg-blue-600 text-white p-2 rounded w-full">
-//           Register
-//         </button>
-//       </form>
-//     </div>
-//   );
-// };
-
-// export default Register;
-
 import React, { useState } from "react";
 import { registerUser } from "../api/authService";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-
+import { loginUser } from "../api/authService";
 const Register = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -86,6 +12,29 @@ const Register = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   setError(null);
+  
+  //   if (password.length !== 8) {
+  //     setError("❌ Password must be exactly 8 characters.");
+  //     return;
+  //   }
+  
+  //   try {
+  //     await registerUser(username, email, password, role);
+  //     alert("🎉 Registration successful! Please log in.");
+  //     navigate("/login");
+  //   } catch (error) {
+  //     if (error.message === "Username already exists") {
+  //       setError("❌ This username is already taken. Try another.");
+  //     } else if (error.message === "Email already registered") {
+  //       setError("❌ This email is already registered. Try with other email.");
+  //     } else {
+  //       setError("❌ Registration failed! Please try again.");
+  //     }
+  //   }
+  // };
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
@@ -96,19 +45,43 @@ const Register = () => {
     }
   
     try {
+      // Step 1: Register the user
       await registerUser(username, email, password, role);
-      alert("🎉 Registration successful! Please log in.");
-      navigate("/login");
+      alert("🎉 Registration successful!");
+  
+      // Step 2: Auto-login the user after successful registration
+      const response = await loginUser(email, password);
+      console.log("Full API Response:", response);
+  
+      const { token, role: userRole, username: loggedInUsername } = response;
+  
+      localStorage.setItem("token", token);
+      localStorage.setItem("userRole", userRole);
+      localStorage.setItem("username", loggedInUsername);
+  
+      console.log("Received token:", token);
+      console.log("Received role:", userRole);
+  
+      const redirectPath = userRole === "admin" ? "/admin-dashboard" : "/user-dashboard";
+      console.log("Redirecting to:", redirectPath);
+      navigate(redirectPath);
+  
     } catch (error) {
-      if (error.message === "Username already exists") {
+      const errorMessage = error?.response?.data?.message || error.message;
+  
+      if (errorMessage === "Username already exists") {
         setError("❌ This username is already taken. Try another.");
-      } else if (error.message === "Email already registered") {
-        setError("❌ This email is already registered. Try with other email.");
+      } else if (errorMessage === "Email already registered") {
+        setError("❌ This email is already registered. Try with another email.");
+      } else if (errorMessage === "Invalid credentials") {
+        setError("❌ Login failed! Invalid credentials.");
       } else {
-        setError("❌ Registration failed! Please try again.");
+        setError("❌ Registration or auto-login failed! Please try again.");
       }
     }
   };
+  
+  
   
 
   return (

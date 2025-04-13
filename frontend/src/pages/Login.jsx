@@ -81,7 +81,7 @@ const Login = () => {
     try {
       const response = await loginUser(email, password);
       console.log("Full API Response:", response);
-      const { token, role, username } = response.message;
+      const { token, role, username } = response;
       localStorage.setItem("token", token);
       localStorage.setItem("userRole", role);
       localStorage.setItem("username", username);

@@ -5,7 +5,7 @@ export const getFlights = async () => {
   try {
     const response = await API.get("/flights");
     console.log(response);
-    return response.data.message || []; // Extracting data from ApiResponse
+    return response.data.data || []; // Extracting data from ApiResponse
   } catch (error) {
     console.error("Error fetching flights:", error);
     return [];

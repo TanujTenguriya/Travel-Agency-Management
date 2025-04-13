@@ -18,7 +18,8 @@ import {
     createUser, 
     updateUser, 
     deleteUser, 
-    loginUser 
+    loginUser, 
+    searchUsers
 } from "../controllers/user.controller.js";
 
 const router = express.Router();
@@ -30,5 +31,6 @@ router.post("/register", createUser); // Register a new user
 router.post("/login", loginUser);   // Login user
 router.put("/:id", updateUser);     // Update user details
 router.delete("/:id", deleteUser);  // Delete a user
+router.get("/username",searchUsers)
 
 export default router;

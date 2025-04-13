@@ -20,19 +20,6 @@ export const getUser = asyncHandler(async (req, res) => {
     res.json(new ApiResponse(200, user));
 });
 
-// Create user (Register)
-// export const createUser = asyncHandler(async (req, res) => {
-//     const { username, email, password, role } = req.body;
-
-//     // Check if email is already registered
-//     const existingUser = await User.findOne({ email });
-//     if (existingUser) throw new ApiError(400, "Email already in use");
-
-//     const user = new User({ username, email, password, role });
-//     await user.save();
-
-//     res.json(new ApiResponse(201, user, "User registered successfully"));
-// });
 export const createUser = async (req, res) => {
     const { username, email, password, role } = req.body;
   
@@ -89,3 +76,15 @@ export const loginUser = asyncHandler(async (req, res) => {
 
     res.json(new ApiResponse(200, { token, role: user.role,username: user.username }, "Login successful"));
 });
+
+// Search users by username
+export const searchUsers = asyncHandler(async (req, res) => {
+    const { username } = req.query;
+  
+    const users = await User.find({
+      username: { $regex: username, $options: "i" }, // case-insensitive partial match
+    });
+  
+    res.json(new ApiResponse(200, users, "Users fetched successfully"));
+  });
+  

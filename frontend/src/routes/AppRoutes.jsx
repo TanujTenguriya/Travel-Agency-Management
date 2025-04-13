@@ -19,6 +19,7 @@ import ManageBuses from "../pages/ManageBus";
 import ManageHotels from "../pages/ManageHotel";
 import ManageTrains from "../pages/ManageTrains";
 import Payment from "../pages/Payment";
+import ManageUsers from "../pages/ManageUsers";
 const AppRoutes = () => {
   return (
     <Routes>
@@ -44,6 +45,7 @@ const AppRoutes = () => {
         <Route path="/admin/manage-buses" element={<ManageBuses />} />
         <Route path="/admin/manage-hotels" element={<ManageHotels />} />
         <Route path="/admin/manage-trains" element={<ManageTrains />} />
+        <Route path="/admin/manage-users" element={<ManageUsers />} />
       </Route>
     </Routes>
   );

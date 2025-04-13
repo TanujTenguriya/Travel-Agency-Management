@@ -209,8 +209,8 @@ const UserDashboard = () => {
       </motion.div>
 
       {/* Booking History */}
-      <div className="mt-8 w-full max-w-3xl bg-white rounded-lg shadow-lg p-6">
-        <h2 className="text-2xl font-bold text-gray-700 mb-4">Your Past Bookings</h2>
+      <div className="w-full max-w-5xl bg-white p-6 rounded-lg shadow-md mb-6">
+        <h2 className="text-2xl font-semibold mb-4 text-gray-800">📋 All Bookings</h2>
         {bookings.length === 0 ? (
           <p className="text-gray-500">You have no bookings yet.</p>
         ) : (

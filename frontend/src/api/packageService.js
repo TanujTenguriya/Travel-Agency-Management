@@ -16,7 +16,7 @@ export const getPackages = async () => {
   try {
     const response = await API.get("/packages");
     console.log(response);
-    return response.data.message || []; // Extracting data from ApiResponse
+    return response.data.data || []; // Extracting data from ApiResponse
   } catch (error) {
     console.error("Error fetching packages:", error);
     return [];
