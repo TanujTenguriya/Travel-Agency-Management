@@ -51,7 +51,7 @@ const AdminDashboard = () => {
   }, {});
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-200 to-indigo-500 flex flex-col items-center py-10 px-4">
+    <div className="min-h-screen bg-gradient-to-br flex flex-col items-center py-10 px-4 bg-[#002b6b]">
       <h1 className="text-4xl font-bold text-white mb-6 flex items-center gap-2">
         <FaUserShield className="text-yellow-300" /> Admin Dashboard
       </h1>

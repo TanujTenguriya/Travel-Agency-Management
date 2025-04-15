@@ -1,148 +1,4 @@
-// import React, { useEffect, useState } from "react";
-// import { getFlights } from "../api/flightService";
-// import { Link } from "react-router-dom";
-// const Flights = () => {
-//   const [flights, setFlights] = useState([]);
-//   const [from, setFrom] = useState("");
-//   const [to, setTo] = useState("");
-//   const [departure, setDeparture] = useState("");
-//   const [sortOption, setSortOption] = useState("");
 
-//   useEffect(() => {
-//     async function fetchFlights() {
-//       try {
-//         const response = await getFlights();
-//         console.log("Fetched Flights:", response);
-
-//         if (Array.isArray(response)) {
-//           setFlights(response);
-//         } else {
-//           console.error("Unexpected API response format:", response);
-//           setFlights([]);
-//         }
-//       } catch (error) {
-//         console.error("Failed to fetch flights:", error);
-//         setFlights([]);
-//       }
-//     }
-//     fetchFlights();
-//   }, []);
-
-//   // ✅ Filtering & Sorting Logic
-//   const filteredAndSortedFlights = [...flights]
-//     .filter((flight) => {
-//       if (from.trim() && !flight.from.toLowerCase().includes(from.toLowerCase())) return false;
-//       if (to.trim() && !flight.to.toLowerCase().includes(to.toLowerCase())) return false;
-//       return true;
-//     })
-//     .sort((a, b) => {
-//       if (sortOption === "priceLowToHigh") return a.price - b.price;
-//       if (sortOption === "priceHighToLow") return b.price - a.price;
-//       if (sortOption === "duration") return a.duration - b.duration;
-//       return 0;
-//     });
-
-//   return (
-//     <div className="container mx-auto p-6">
-//       <h2 className="text-3xl font-bold text-center mb-6">Find Your Flight</h2>
-
-//       {/* ✅ Search & Sorting Inputs */}
-//       <div className="flex flex-wrap justify-center items-center gap-4 bg-gray-100 p-4 rounded-lg shadow-lg">
-//         {/* From City */}
-//         <div>
-//           <label className="block font-semibold">From</label>
-//           <input
-//             type="text"
-//             placeholder="Enter Departure City"
-//             value={from}
-//             onChange={(e) => setFrom(e.target.value)}
-//             className="border p-2 rounded w-48"
-//           />
-//         </div>
-
-//         {/* To City */}
-//         <div>
-//           <label className="block font-semibold">To</label>
-//           <input
-//             type="text"
-//             placeholder="Enter Destination"
-//             value={to}
-//             onChange={(e) => setTo(e.target.value)}
-//             className="border p-2 rounded w-48"
-//           />
-//         </div>
-
-//         {/* Departure Date */}
-//         <div>
-//           <label className="block font-semibold">Departure Date</label>
-//           <input
-//             type="date"
-//             value={departure}
-//             onChange={(e) => setDeparture(e.target.value)}
-//             className="border p-2 rounded w-48"
-//           />
-//         </div>
-
-//         {/* ✅ Sorting Dropdown */}
-//         <div>
-//           <label className="block font-semibold">Sort By</label>
-//           <select
-//             value={sortOption}
-//             onChange={(e) => setSortOption(e.target.value)}
-//             className="border p-2 rounded w-48"
-//           >
-//             <option value="">Sort By</option>
-//             <option value="priceLowToHigh">Price - Low to High</option>
-//             <option value="priceHighToLow">Price - High to Low</option>
-//             <option value="duration">Duration</option>
-//           </select>
-//         </div>
-
-//         {/* Search Button */}
-//         <button className="bg-gradient-to-r from-blue-500 to-blue-700 text-white font-bold px-6 py-2 rounded shadow-lg mt-5">
-//           SEARCH
-//         </button>
-//       </div>
-
-//       {/* ✅ Display Flights */}
-//       {filteredAndSortedFlights.length === 0 ? (
-//         <p className="text-center text-gray-500 mt-6">No flights available.</p>
-//       ) : (
-//         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-//           {filteredAndSortedFlights.map((flight) => (
-//             <div key={flight._id} className="bg-white rounded-lg shadow-lg overflow-hidden">
-//               <div className="p-4">
-//                 {/* Flight Details */}
-//                 <h3 className="text-lg font-bold">{flight.airline}</h3>
-//                 <p className="text-gray-600"><strong>From:</strong> {flight.from}</p>
-//                 <p className="text-gray-600"><strong>To:</strong> {flight.to}</p>
-//                 <p className="text-gray-600"><strong>Date:</strong> {departure}</p>
-//                 <p className="text-gray-600"><strong>Departure Time:</strong> {flight.departureTime}</p>
-//                 <p className="text-gray-600"><strong>Arrival Time:</strong> {flight.arrivalTime}</p>
-//                 <p className="text-gray-600"><strong>Duration:</strong> {flight.duration} hrs</p>
-
-//                 {/* Price & Booking Button */}
-//                 <div className="flex justify-between items-center mt-4">
-//                   <p className="text-xl font-bold text-gray-800">₹{flight.price}</p>
-//                   <Link 
-//                         to="/payment" 
-//                         state={{ amount: flight.price }} // Pass amount as state
-//                         >
-//                         <button className="mt-4 w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
-//                         Book Now
-//                         </button>
-//                     </Link>
-//                 </div>
-//               </div>
-//             </div>
-//           ))}
-//         </div>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default Flights;
 
 import React, { useEffect, useState } from "react";
 import { getFlights } from "../api/flightService";
@@ -189,7 +45,8 @@ const Flights = () => {
     });
 
   return (
-    <div className="min-h-screen bg-gradient-to-br bg-black p-6" style={{backgroundImage: "url('/assets/flight.jpg')"}}>
+    <div className="min-h-screen p-6 bg-[#002b6b]">
+
       <motion.h2
         className="text-4xl font-bold text-center text-white mb-6"
         initial={{ opacity: 0, y: -20 }}
@@ -201,13 +58,13 @@ const Flights = () => {
 
       {/* ✅ Search & Sorting Inputs */}
       <motion.div
-        className="flex flex-wrap justify-center items-center gap-4 bg-white/30 backdrop-blur-md p-6 rounded-lg shadow-lg max-w-4xl mx-auto"
+        className="flex flex-wrap justify-center items-center gap-4 bg-white/100 backdrop-blur-md p-6 rounded-lg shadow-lg max-w-4xl mx-auto"
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.2 }}
       >
         <div>
-          <label className="block text-white font-semibold">From</label>
+          <label className="block text-black font-semibold">From</label>
           <input
             type="text"
             placeholder="Enter Departure City"
@@ -218,7 +75,7 @@ const Flights = () => {
         </div>
 
         <div>
-          <label className="block text-white font-semibold">To</label>
+          <label className="block text-black font-semibold">To</label>
           <input
             type="text"
             placeholder="Enter Destination"
@@ -229,9 +86,10 @@ const Flights = () => {
         </div>
 
         <div>
-          <label className="block text-white font-semibold">Departure Date</label>
+          <label className="block text-black font-semibold">Departure Date</label>
           <input
             type="date"
+            
             value={departure}
             onChange={(e) => setDeparture(e.target.value)}
             className="border p-2 rounded w-48"
@@ -239,7 +97,7 @@ const Flights = () => {
         </div>
 
         <div>
-          <label className="block text-white font-semibold">Sort By</label>
+          <label className="block text-black font-semibold">Sort By</label>
           <select
             value={sortOption}
             onChange={(e) => setSortOption(e.target.value)}
@@ -253,7 +111,7 @@ const Flights = () => {
         </div>
 
         <motion.button
-          className="bg-gradient-to-r from-green-400 to-green-600 text-white font-bold px-6 py-2 rounded shadow-lg mt-5 hover:scale-105 transition-all"
+          className="bg-gradient-to-r bg-blue-600 text-white font-bold px-6 py-2 rounded shadow-lg mt-5 hover:scale-105 transition-all"
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
         >

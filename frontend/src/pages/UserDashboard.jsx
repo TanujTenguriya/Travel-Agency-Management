@@ -192,7 +192,7 @@ const UserDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center bg-gradient-to-br from-blue-500 to-purple-600 p-6">
+    <div className="min-h-screen flex flex-col items-center bg-gradient-to-br p-6 bg-[#002b6b]">
       {/* Profile */}
       <motion.div
         className="glassmorphism w-full max-w-md p-6 rounded-lg shadow-xl text-center"

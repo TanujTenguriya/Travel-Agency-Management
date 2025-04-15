@@ -272,7 +272,7 @@ const Home = () => {
     </div>
   </Link>
 </div>
-<footer className="mt-24 bg-[#031B4E]/80 text-gray-300 text-center  py-14">
+<footer className="mt-20 bg-[#031B4E]/80 text-gray-300 text-center  py-14">
   <p className="text-xl mb-2">Made with ❤️ for Travelers</p>
   <p className="text-xl">© 2025 TravelNow. All rights reserved.</p>
 </footer>
