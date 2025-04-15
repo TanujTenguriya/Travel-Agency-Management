@@ -9,11 +9,12 @@ const Hotel = () => {
   const [location, setLocation] = useState("");
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
-  const [guests, setGuests] = useState(1);
-  const [rooms, setRooms] = useState(1);
+  const [guests, setGuests] = useState("");
+  const [rooms, setRooms] = useState("");
   const [filteredHotels, setFilteredHotels] = useState([]);
   const [loading, setLoading] = useState(true);
   const [mainImages, setMainImages] = useState({});
+  const [hasSearched, setHasSearched] = useState(false);
 
   useEffect(() => {
     async function fetchHotels() {
@@ -43,6 +44,7 @@ const Hotel = () => {
       hotel.location.toLowerCase().includes(location.toLowerCase())
     );
     setFilteredHotels(filtered);
+    setHasSearched(true);
   };
 
   return (
@@ -58,58 +60,79 @@ const Hotel = () => {
       >
        
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <input
-            type="text"
-            placeholder="Enter city or hotel name"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-            className="p-2 border rounded w-full"
-          />
-          <input
-            type="date"
-            value={checkIn}
-            onChange={(e) => setCheckIn(e.target.value)}
-            className="p-2 border rounded w-full"
-          />
-          <input
-            type="date"
-            value={checkOut}
-            onChange={(e) => setCheckOut(e.target.value)}
-            className="p-2 border rounded w-full"
-          />
-          <div className="flex space-x-4">
-            <input
-              type="number"
-              min="1"
-              value={guests}
-              onChange={(e) => setGuests(e.target.value)}
-              className="p-2 border rounded w-24"
-              placeholder="Guests"
-            />
-            <input
-              type="number"
-              min="1"
-              value={rooms}
-              onChange={(e) => setRooms(e.target.value)}
-              className="p-2 border rounded w-24"
-              placeholder="Rooms"
-            />
-          </div>
-        </div>
-        <motion.button
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-          onClick={handleSearch}
-          className="bg-gradient-to-r from-blue-500 to-blue-700 text-white font-bold px-8 py-2 rounded shadow-lg mt-4 
-          hover:scale-105 hover:shadow-xl transition-all duration-300 ease-in-out"
-        >
-           SEARCH
-        </motion.button>
+  <div>
+    <label className="block mb-1 font-medium">Location</label>
+    <input
+      type="text"
+      placeholder="Enter city or hotel name"
+      value={location}
+      onChange={(e) => setLocation(e.target.value)}
+      className="p-2 border rounded w-full"
+    />
+  </div>
+
+  <div>
+    <label className="block mb-1 font-medium">Check-in Date</label>
+    <input
+      type="date"
+      value={checkIn}
+      onChange={(e) => setCheckIn(e.target.value)}
+      className="p-2 border rounded w-full"
+    />
+  </div>
+
+  <div>
+    <label className="block mb-1 font-medium">Check-out Date</label>
+    <input
+      type="date"
+      value={checkOut}
+      onChange={(e) => setCheckOut(e.target.value)}
+      className="p-2 border rounded w-full"
+    />
+  </div>
+
+  <div>
+    <label className="block mb-1 font-medium">Guests & Rooms</label>
+    <div className="flex space-x-4">
+      <input
+        type="number"
+        min="1"
+        value={guests}
+        onChange={(e) => setGuests(e.target.value)}
+        className="p-2 border rounded w-24"
+        placeholder="Guests"
+      />
+      <input
+        type="number"
+        min="1"
+        value={rooms}
+        onChange={(e) => setRooms(e.target.value)}
+        className="p-2 border rounded w-24"
+        placeholder="Rooms"
+      />
+    </div>
+  </div>
+</div>
+
+        <div className="flex justify-center mt-4">
+  <motion.button
+    whileHover={{ scale: 1.1 }}
+    whileTap={{ scale: 0.9 }}
+    onClick={handleSearch}
+    className="bg-gradient-to-r from-blue-500 to-blue-700 text-white font-bold px-8 py-2 rounded shadow-lg 
+    hover:scale-105 hover:shadow-xl transition-all duration-300 ease-in-out"
+  >
+    SEARCH
+  </motion.button>
+</div>
       </motion.div>
 
       <div className="mt-8 max-w-5xl w-full">
         <h2 className="text-2xl font-bold mb-4 text-white">Showing Properties</h2>
-        {loading ? (
+        {!hasSearched ? (
+        <p className="text-center text-gray-200">🔍 Use the search bar above to find hotels.</p>
+          ) : loading ? (
+
           <p className="text-center text-gray-200">Loading hotels...</p>
         ) : filteredHotels.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

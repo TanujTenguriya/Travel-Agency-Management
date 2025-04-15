@@ -104,7 +104,7 @@ const Payment = () => {
   
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-50 to-gray-100">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r bg-[#002b6b]">
       <div className="bg-white p-8 rounded-xl shadow-2xl w-96 transform transition duration-300 hover:scale-105 animate-fadeIn">
         {/* ✅ Payment Title */}
         <h2 className="text-3xl font-extrabold text-center text-blue-700 mb-4">

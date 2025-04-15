@@ -11,6 +11,7 @@ const Flights = () => {
   const [to, setTo] = useState("");
   const [departure, setDeparture] = useState("");
   const [sortOption, setSortOption] = useState("");
+  const [showResults, setShowResults] = useState(false);
 
   useEffect(() => {
     async function fetchFlights() {
@@ -31,18 +32,26 @@ const Flights = () => {
   }, []);
 
   // ✅ Filtering & Sorting Logic
-  const filteredAndSortedFlights = [...flights]
-    .filter((flight) => {
-      if (from.trim() && !flight.from.toLowerCase().includes(from.toLowerCase())) return false;
-      if (to.trim() && !flight.to.toLowerCase().includes(to.toLowerCase())) return false;
-      return true;
-    })
-    .sort((a, b) => {
-      if (sortOption === "priceLowToHigh") return a.price - b.price;
-      if (sortOption === "priceHighToLow") return b.price - a.price;
-      if (sortOption === "duration") return a.duration - b.duration;
-      return 0;
-    });
+  const [filteredFlights, setFilteredFlights] = useState([]);
+
+  const handleSearch = () => {
+    const filtered = flights
+      .filter((flight) => {
+        if (from.trim() && !flight.from.toLowerCase().includes(from.toLowerCase())) return false;
+        if (to.trim() && !flight.to.toLowerCase().includes(to.toLowerCase())) return false;
+        return true;
+      })
+      .sort((a, b) => {
+        if (sortOption === "priceLowToHigh") return a.price - b.price;
+        if (sortOption === "priceHighToLow") return b.price - a.price;
+        if (sortOption === "duration") return a.duration - b.duration;
+        return 0;
+      });
+  
+    setFilteredFlights(filtered);
+    setShowResults(true);
+  };
+  
 
   return (
     <div className="min-h-screen p-6 bg-[#002b6b]">
@@ -111,16 +120,18 @@ const Flights = () => {
         </div>
 
         <motion.button
-          className="bg-gradient-to-r bg-blue-600 text-white font-bold px-6 py-2 rounded shadow-lg mt-5 hover:scale-105 transition-all"
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          SEARCH
-        </motion.button>
+  onClick={handleSearch}
+  className="bg-gradient-to-r bg-blue-600 text-white font-bold px-6 py-2 rounded shadow-lg mt-5 hover:scale-105 transition-all"
+  whileHover={{ scale: 1.1 }}
+  whileTap={{ scale: 0.95 }}
+>
+  SEARCH
+</motion.button>
+
       </motion.div>
 
       {/* ✅ Display Flights */}
-      {filteredAndSortedFlights.length === 0 ? (
+      {showResults && filteredFlights.length === 0 ? (
         <motion.p
           className="text-center text-white mt-6"
           initial={{ opacity: 0 }}
@@ -129,9 +140,9 @@ const Flights = () => {
         >
           No flights available.
         </motion.p>
-      ) : (
+      ) :showResults &&  (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-          {filteredAndSortedFlights.map((flight) => (
+          {filteredFlights.map((flight) => (
             <motion.div
               key={flight._id}
               className="bg-white/80 backdrop-blur-lg rounded-lg shadow-lg overflow-hidden transform transition hover:scale-105"

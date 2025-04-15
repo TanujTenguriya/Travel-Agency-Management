@@ -195,22 +195,23 @@ const UserDashboard = () => {
     <div className="min-h-screen flex flex-col items-center bg-gradient-to-br p-6 bg-[#002b6b]">
       {/* Profile */}
       <motion.div
-        className="glassmorphism w-full max-w-md p-6 rounded-lg shadow-xl text-center"
-        initial={{ y: -50, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6 }}
-      >
-        <FaUserCircle className="text-6xl text-white mx-auto mb-4" />
-        <h1 className="text-3xl font-bold text-white">Welcome, {user.username}!</h1>
-        <div className="mt-4 text-white space-y-2">
-          <p><strong>Email:</strong> {user.email}</p>
-          <p><strong>Role:</strong> {user.role}</p>
-        </div>
-      </motion.div>
+  className="bg-white w-full max-w-md p-6 rounded-lg shadow-xl text-center"
+  initial={{ y: -50, opacity: 0 }}
+  animate={{ y: 0, opacity: 1 }}
+  transition={{ duration: 0.6 }}
+>
+  <FaUserCircle className="text-6xl text-blue-700 mx-auto mb-4" />
+  <h1 className="text-3xl font-bold text-black">Welcome, {user.username}!</h1>
+  <div className="mt-4 text-black space-y-2">
+    <p><strong>Email:</strong> {user.email}</p>
+    <p><strong>Role:</strong> {user.role}</p>
+  </div>
+</motion.div>
+
 
       {/* Booking History */}
-      <div className="w-full max-w-5xl bg-white p-6 rounded-lg shadow-md mb-6">
-        <h2 className="text-2xl font-semibold mb-4 text-gray-800">📋 All Bookings</h2>
+      <div className="w-full max-w-5xl bg-white p-6 rounded-lg shadow-md mb-6 mt-10">
+  <h2 className="text-2xl font-semibold mb-4 text-gray-800">📋 All Bookings</h2>
         {bookings.length === 0 ? (
           <p className="text-gray-500">You have no bookings yet.</p>
         ) : (
