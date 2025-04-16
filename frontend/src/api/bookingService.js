@@ -22,17 +22,6 @@ export const getAllBookings = async () => {
   }
 };
 
-// ✅ Get a single booking by ID
-export const getBookingById = async (id) => {
-  try {
-    const response = await API.get(`/bookings/${id}`);
-    return response.data?.data;
-  } catch (error) {
-    console.error("Error fetching booking by ID:", error);
-    return null;
-  }
-};
-
 // ✅ Create a new booking
 export const createBooking = async (bookingData) => {
   try {

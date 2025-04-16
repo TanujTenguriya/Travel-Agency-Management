@@ -1,5 +1,3 @@
-
-
 import React, { useEffect, useState } from "react";
 import { getBuses } from "../api/busService";
 import { Link } from "react-router-dom";

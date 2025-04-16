@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { getHotels } from "../api/hotelService";
 import { Link } from "react-router-dom";

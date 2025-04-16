@@ -1,5 +1,3 @@
-
-
 import React, { useEffect, useState } from "react";
 import { getFlights } from "../api/flightService";
 import { Link } from "react-router-dom";
