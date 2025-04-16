@@ -12,29 +12,6 @@ const Register = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   setError(null);
-  
-  //   if (password.length !== 8) {
-  //     setError("❌ Password must be exactly 8 characters.");
-  //     return;
-  //   }
-  
-  //   try {
-  //     await registerUser(username, email, password, role);
-  //     alert("🎉 Registration successful! Please log in.");
-  //     navigate("/login");
-  //   } catch (error) {
-  //     if (error.message === "Username already exists") {
-  //       setError("❌ This username is already taken. Try another.");
-  //     } else if (error.message === "Email already registered") {
-  //       setError("❌ This email is already registered. Try with other email.");
-  //     } else {
-  //       setError("❌ Registration failed! Please try again.");
-  //     }
-  //   }
-  // };
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);

@@ -1,14 +1,3 @@
-// import API from "./axiosConfig";
-
-// export const getPackages = async () => {
-//   try {
-//     const response = await API.get("/packages");
-//     return response.data;
-//   } catch (error) {
-//     console.error("Error fetching packages:", error);
-//     return [];
-//   }
-// };
 import API from "./axiosConfig";
 
 // Fetch all packages
@@ -34,16 +23,6 @@ export const getPackage = async (packageId) => {
   }
 };
 
-// Create a new package
-// export const createPackage = async (packageData) => {
-//   try {
-//     const response = await API.post("/packages", packageData);
-//     return response.data.data;
-//   } catch (error) {
-//     console.error("Error creating package:", error);
-//     throw error;
-//   }
-// };
 export const createPackage = async (packageData) => {
   console.log(packageData);
   try {
@@ -59,7 +38,6 @@ export const createPackage = async (packageData) => {
     throw error;
   }
 };
-
 
 // Update an existing package (Admin only)
 export const updatePackage = async (packageId, updatedData) => {

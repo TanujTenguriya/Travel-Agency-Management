@@ -1,5 +1,3 @@
-
-
 import React, { useEffect, useState } from "react";
 import { getBuses } from "../api/busService";
 import { Link } from "react-router-dom";
@@ -10,6 +8,8 @@ const Bus = () => {
   const [to, setTo] = useState("");
   const [departureDate, setDepartureDate] = useState("");
   const [sortOption, setSortOption] = useState("");
+  const [filteredBuses, setFilteredBuses] = useState([]);
+  const [showResults, setShowResults] = useState(false);
 
   // ✅ Fetch bus data
   useEffect(() => {
@@ -27,18 +27,24 @@ const Bus = () => {
   }, []);
 
   // ✅ Filter and Sort buses
-  const filteredAndSortedBuses = [...buses]
-    .filter((bus) => {
-      if (from.trim() && !bus.from.toLowerCase().includes(from.toLowerCase())) return false;
-      if (to.trim() && !bus.to.toLowerCase().includes(to.toLowerCase())) return false;
-      return true;
-    })
-    .sort((a, b) => {
-      if (sortOption === "priceLowToHigh") return a.price - b.price;
-      if (sortOption === "priceHighToLow") return b.price - a.price;
-      if (sortOption === "duration") return a.duration - b.duration;
-      return 0;
-    });
+  const handleSearch = () => {
+    const filtered = buses
+      .filter((bus) => {
+        if (from.trim() && !bus.from.toLowerCase().includes(from.toLowerCase())) return false;
+        if (to.trim() && !bus.to.toLowerCase().includes(to.toLowerCase())) return false;
+        return true;
+      })
+      .sort((a, b) => {
+        if (sortOption === "priceLowToHigh") return a.price - b.price;
+        if (sortOption === "priceHighToLow") return b.price - a.price;
+        if (sortOption === "duration") return a.duration - b.duration;
+        return 0;
+      });
+  
+    setFilteredBuses(filtered);
+    setShowResults(true);
+  };
+  
 
   return (
     <div className="min-h-screen p-6 bg-[#002b6b]">
@@ -98,20 +104,25 @@ const Bus = () => {
 
   {/* Search Button - Centered Below */}
   <div className="mt-4">
-    <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-3 rounded shadow-lg transition transform hover:scale-105">
-       SEARCH
-    </button>
+  <button
+  onClick={handleSearch}
+  className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-3 rounded shadow-lg transition transform hover:scale-105"
+>
+  SEARCH
+</button>
+
   </div>
 </div>
 
       {/* 🔹 Bus Listings */}
-      {filteredAndSortedBuses.length === 0 ? (
+      {showResults && filteredBuses.length === 0 ? (
+
         <p className="text-center text-gray-500 mt-10 text-lg animate-fadeIn">
           No buses available. Try a different search.
         </p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-10">
-          {filteredAndSortedBuses.map((bus) => (
+          {filteredBuses.map((bus) => (
             <div
               key={bus._id}
               className="bg-white rounded-xl shadow-xl overflow-hidden transform transition duration-300 hover:scale-105 hover:shadow-2xl animate-fadeIn"

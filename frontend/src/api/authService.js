@@ -13,20 +13,6 @@ export const loginUser = async (email, password) => {
   }
 };
 
-// export const registerUser = async (username, email, password, role) => {
-//   try {
-    
-//     const response = await API.post("/users/register", {
-//       username,
-//       email,
-//       password,
-//       role,
-//     });
-//   } catch (error) {
-//     console.log("hello")
-//     throw error.response.data;
-//   }
-// };
 export const getAllUsers = async () => {
   try {
     const response = await API.get("/users");

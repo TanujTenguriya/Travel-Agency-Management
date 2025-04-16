@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { getTrains } from "../api/trainService";
 import { Link } from "react-router-dom";
@@ -11,6 +10,8 @@ const Train = () => {
   const [to, setTo] = useState("");
   const [departureDate, setDepartureDate] = useState("");
   const [sortOption, setSortOption] = useState("");
+  const [filteredTrains, setFilteredTrains] = useState([]);
+  const [showResults, setShowResults] = useState(false);
 
   useEffect(() => {
     async function fetchTrains() {
@@ -30,17 +31,24 @@ const Train = () => {
     fetchTrains();
   }, []);
 
-  const filteredAndSortedTrains = [...trains]
-    .filter((train) => {
-      if (to.trim() === "") return true;
-      return train.to.toLowerCase().includes(to.toLowerCase());
-    })
-    .sort((a, b) => {
-      if (sortOption === "priceLowToHigh") return a.price - b.price;
-      if (sortOption === "priceHighToLow") return b.price - a.price;
-      if (sortOption === "duration") return a.duration - b.duration;
-      return 0;
-    });
+  const handleSearch = () => {
+    const filtered = trains
+      .filter((train) => {
+        if (from.trim() && !train.from.toLowerCase().includes(from.toLowerCase())) return false;
+        if (to.trim() && !train.to.toLowerCase().includes(to.toLowerCase())) return false;
+        return true;
+      })
+      .sort((a, b) => {
+        if (sortOption === "priceLowToHigh") return a.price - b.price;
+        if (sortOption === "priceHighToLow") return b.price - a.price;
+        if (sortOption === "duration") return a.duration - b.duration;
+        return 0;
+      });
+  
+    setFilteredTrains(filtered);
+    setShowResults(true);
+  };
+  
 
   return (
     <div className="min-h-screen p-6 bg-[#002b6b]">
@@ -117,16 +125,20 @@ const Train = () => {
 
   {/* Search Button Centered Below */}
   <div className="mt-4">
-    <button className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 py-2 rounded-lg transition-transform duration-300 transform hover:scale-105">
-      <FaSearch /> SEARCH
-    </button>
+  <button
+  onClick={handleSearch}
+  className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 py-2 rounded-lg transition-transform duration-300 transform hover:scale-105"
+>
+  <FaSearch /> SEARCH
+</button>
+
   </div>
 </motion.div>
 
 
-      {filteredAndSortedTrains.length === 0 ? (
-        <p className="text-center text-gray-600 mt-8">No trains available.</p>
-      ) : (
+{showResults && filteredTrains.length === 0 ? (
+  <p className="text-center text-gray-600 mt-8">No trains available.</p>
+) : showResults && (
         <motion.div
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-10"
           initial="hidden"
@@ -140,7 +152,7 @@ const Train = () => {
             },
           }}
         >
-          {filteredAndSortedTrains.map((train) => (
+          {filteredTrains.map((train) => (
             <motion.div
               key={train._id}
               className="bg-white p-6 rounded-2xl shadow-xl hover:shadow-2xl transition duration-300"
