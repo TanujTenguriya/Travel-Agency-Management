@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getFlights } from "../api/flightService";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion"; // ✅ Framer Motion for animations
 
 const Flights = () => {
@@ -50,6 +50,23 @@ const Flights = () => {
     setShowResults(true);
   };
   
+  const handleBooking = () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("⚠️ Please login to book a flight!");
+      navigate("/login");  // Redirect if not logged in
+      return;
+    }
+
+    // ✅ If logged in → proceed to payment
+    navigate("/payment", {
+      state: {
+        amount: flight.price,
+        type: "Flight",
+        id: flight._id,
+      },
+    });
+  };
 
   return (
     <div className="min-h-screen p-6 bg-[#002b6b]">
@@ -159,18 +176,14 @@ const Flights = () => {
 
                 <div className="flex justify-between items-center mt-4">
                   <p className="text-2xl font-bold text-blue-700">₹{flight.price}</p>
-                  <Link to="/payment" state={{ amount: flight.price,
-                    type: "Flight",
-                    id: flight._id,
-                   }}>
-                    <motion.button
-                      className="mt-4 bg-gradient-to-r from-yellow-400 to-yellow-600 text-white py-2 px-4 rounded hover:scale-105 transition"
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      Book Now
-                    </motion.button>
-                  </Link>
+                  <motion.button
+                  onClick={handleBooking}
+                  className="mt-4 bg-gradient-to-r from-yellow-400 to-yellow-600 text-white py-2 px-4 rounded hover:scale-105 transition"
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  Book Now
+                </motion.button>
                 </div>
               </div>
             </motion.div>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getBuses } from "../api/busService";
 import { Link } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 const Bus = () => {
   const [buses, setBuses] = useState([]);
   const [from, setFrom] = useState("");
@@ -45,6 +45,17 @@ const Bus = () => {
     setShowResults(true);
   };
   
+  const handleBooking = (bus) => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("⚠️ Please login to book a bus!");
+      navigate("/login");  // Redirect to login page
+      return;
+    }
+
+    // If logged in → go to payment page
+    navigate("/payment", { state: { amount: bus.price, type: "Bus", id: bus._id } });
+  };
 
   return (
     <div className="min-h-screen p-6 bg-[#002b6b]">
@@ -145,14 +156,12 @@ const Bus = () => {
                 </div>
 
                 {/* 🔹 Book Now Button */}
-                <Link to="/payment" state={{ amount: bus.price,
-                    type: "Bus",
-                    id: bus._id,
-                 }}>
-                  <button className="mt-6 w-full bg-gradient-to-r from-blue-600 to-blue-800 text-white py-3 rounded-lg shadow-lg transition transform hover:scale-105 hover:shadow-blue-500/50">
-                    🚀 Book Now
-                  </button>
-                </Link>
+                <button
+                  onClick={() => handleBooking(bus)}
+                  className="mt-6 w-full bg-gradient-to-r from-blue-600 to-blue-800 text-white py-3 rounded-lg shadow-lg transition transform hover:scale-105 hover:shadow-blue-500/50"
+                >
+                  🚀 Book Now
+                </button>
               </div>
             </div>
           ))}

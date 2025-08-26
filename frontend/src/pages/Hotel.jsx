@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getHotels } from "../api/hotelService";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
 const Hotel = () => {
@@ -46,6 +46,24 @@ const Hotel = () => {
     setHasSearched(true);
   };
 
+  const handleBooking = (hotel) => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("⚠️ Please login to book a hotel!");
+      navigate("/login");  // redirect if not logged in
+      return;
+    }
+
+    // ✅ If logged in → proceed to payment
+    navigate("/payment", {
+      state: {
+        amount: hotel.pricePerNight,
+        type: "Hotel",
+        id: hotel._id,
+      },
+    });
+  };
+
   return (
     <div className="min-h-screen p-6 flex flex-col items-center bg-[#002b6b]">
         <h1 className="text-3xl font-bold mb-6 text-center text-white">
@@ -71,24 +89,43 @@ const Hotel = () => {
   </div>
 
   <div>
-    <label className="block mb-1 font-medium">Check-in Date</label>
-    <input
-      type="date"
-      value={checkIn}
-      onChange={(e) => setCheckIn(e.target.value)}
-      className="p-2 border rounded w-full"
-    />
-  </div>
+  <label className="block mb-1 font-medium">Check-in Date</label>
+  <input
+    type="date"
+    value={checkIn}
+    onChange={(e) => {
+      const newCheckIn = e.target.value;
+      setCheckIn(newCheckIn);
 
-  <div>
-    <label className="block mb-1 font-medium">Check-out Date</label>
-    <input
-      type="date"
-      value={checkOut}
-      onChange={(e) => setCheckOut(e.target.value)}
-      className="p-2 border rounded w-full"
-    />
-  </div>
+      // ❌ Prevent invalid case: check-in >= check-out
+      if (checkOut && new Date(newCheckIn) >= new Date(checkOut)) {
+        alert("⚠️ Check-in date must be before check-out date!");
+        setCheckOut(""); // reset checkout if invalid
+      }
+    }}
+    className="p-2 border rounded w-full"
+  />
+</div>
+
+<div>
+  <label className="block mb-1 font-medium">Check-out Date</label>
+  <input
+    type="date"
+    value={checkOut}
+    onChange={(e) => {
+      const newCheckOut = e.target.value;
+      if (checkIn && new Date(newCheckOut) <= new Date(checkIn)) {
+        alert("⚠️ Check-out date must be after check-in date!");
+        setCheckOut("");
+        return; // don’t update invalid date
+      }else{
+        setCheckOut(newCheckOut);
+      }  
+    }}
+    className="p-2 border rounded w-full"
+  />
+</div>
+
 
   <div>
     <label className="block mb-1 font-medium">Guests & Rooms</label>
@@ -224,17 +261,12 @@ const Hotel = () => {
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                     >
-                    <Link
-                    to="/payment"
-                    state={{
-                    amount: hotel.pricePerNight,
-                    type: "Hotel",
-                    id: hotel._id,
-                    }}
-                    className="mt-4 block text-center w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+                    <button
+                      onClick={() => handleBooking(hotel)}
+                      className="mt-4 block text-center w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition transform hover:scale-105"
                     >
-                     Book Now
-                    </Link>
+                      Book Now
+                    </button>
                     </motion.div>
                   </div>
                 </motion.div>

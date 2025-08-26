@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getTrains } from "../api/trainService";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FaTrain, FaSearch, FaRupeeSign, FaClock } from "react-icons/fa";
 
@@ -49,6 +49,23 @@ const Train = () => {
     setShowResults(true);
   };
   
+  const handleBooking = (train) => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("⚠️ Please login to book a train!");
+      navigate("/login");  // redirect to login page
+      return;
+    }
+
+    // ✅ Logged in → proceed to payment
+    navigate("/payment", {
+      state: {
+        amount: train.price,
+        type: "Train",
+        id: train._id,
+      },
+    });
+  };
 
   return (
     <div className="min-h-screen p-6 bg-[#002b6b]">
@@ -184,14 +201,12 @@ const Train = () => {
                   <strong>Seats:</strong> {train.seatsAvailable}
                 </p>
               </div>
-              <Link to="/payment" state={{ amount: train.price,
-                type: "Train",
-                id: train._id,
-               }}>
-                <button className="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold transition duration-300">
-                  Book Now
-                </button>
-              </Link>
+              <button
+                onClick={() => handleBooking(train)}
+                className="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold transition duration-300"
+              >
+                Book Now
+              </button>
             </motion.div>
           ))}
         </motion.div>

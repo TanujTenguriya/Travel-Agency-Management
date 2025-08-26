@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getPackages } from "../api/packageService";
 import { Link } from "react-router-dom";
 import { FaUmbrellaBeach } from "react-icons/fa"; // ✅ Import icon
-
+import { useNavigate } from "react-router-dom";
 const Packages = () => {
   const [packages, setPackages] = useState([]);
   const [fromCity, setFromCity] = useState("");
@@ -41,6 +41,24 @@ const Packages = () => {
       if (sortOption === "duration") return a.duration - b.duration;
       return 0;
     });
+  
+    const handleBooking = () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("⚠️ Please login to book a package!");
+      navigate("/login");  // redirect to login page
+      return;
+    }
+
+    // ✅ If logged in → go to payment
+    navigate("/payment", {
+      state: {
+        amount: pkg.price,
+        type: "Package",
+        id: pkg._id,
+      },
+    });
+  };
 
   return (
     <div className="container mx-auto p-6 bg-[#002b6b]">
@@ -151,18 +169,12 @@ const Packages = () => {
                     )}
                   </div>
 
-                  <Link 
-                    to="/payment" 
-                    state={{ 
-                      amount: pkg.price,
-                      type: "Package",
-                      id: pkg._id,
-                    }}
+                  <button
+                    onClick={handleBooking}
+                    className="mt-4 w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition transform hover:scale-105"
                   >
-                    <button className="mt-4 w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
-                      Book Now
-                    </button>
-                  </Link>
+                    Book Now
+                  </button>
                 </div>
               </div>
             );
