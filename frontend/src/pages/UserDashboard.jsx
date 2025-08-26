@@ -46,7 +46,6 @@ const UserDashboard = () => {
   <h1 className="text-3xl font-bold text-black">Welcome, {user.username}!</h1>
   <div className="mt-4 text-black space-y-2">
     <p><strong>Email:</strong> {user.email}</p>
-    <p><strong>Role:</strong> {user.role}</p>
   </div>
 </motion.div>
 

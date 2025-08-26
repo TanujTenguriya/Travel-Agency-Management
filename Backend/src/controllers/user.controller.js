@@ -4,20 +4,20 @@ import ApiResponse from "../utils/ApiResponse.js";
 import ApiError from "../utils/ApiError.js";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-
+import bcrypt from "bcrypt";
 dotenv.config();
 
 // Get all users
 export const getUsers = asyncHandler(async (req, res) => {
-    const users = await User.find();
-    res.json(new ApiResponse(200, users));
+  const users = await User.find().select("-password"); // exclude password
+  res.json(new ApiResponse(200, users));
 });
 
 // Get single user
 export const getUser = asyncHandler(async (req, res) => {
-    const user = await User.findById(req.params.id);
-    if (!user) throw new ApiError(404, "User not found");
-    res.json(new ApiResponse(200, user));
+  const user = await User.findById(req.params.id).select("-password");
+  if (!user) throw new ApiError(404, "User not found");
+  res.json(new ApiResponse(200, user));
 });
 
 export const createUser = async (req, res) => {
@@ -44,47 +44,60 @@ export const createUser = async (req, res) => {
 
 // Update user
 export const updateUser = asyncHandler(async (req, res) => {
-    const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    if (!user) throw new ApiError(404, "User not found");
-    res.json(new ApiResponse(200, user, "User updated successfully"));
+  const { password, ...rest } = req.body;
+  let updateData = { ...rest };
+
+  if (password) {
+    const salt = await bcrypt.genSalt(10);
+    updateData.password = await bcrypt.hash(password, salt);
+  }
+
+  const user = await User.findByIdAndUpdate(req.params.id, updateData, { new: true });
+  if (!user) throw new ApiError(404, "User not found");
+
+  res.json(new ApiResponse(200, user, "User updated successfully"));
 });
 
 // Delete user
 export const deleteUser = asyncHandler(async (req, res) => {
-    const user = await User.findByIdAndDelete(req.params.id);
-    if (!user) throw new ApiError(404, "User not found");
-    res.json(new ApiResponse(200, null, "User deleted successfully"));
+  const user = await User.findByIdAndDelete(req.params.id).select("-password");
+  if (!user) throw new ApiError(404, "User not found");
+  res.json(new ApiResponse(200, null, "User deleted successfully"));
 });
 
 // Login user
 export const loginUser = asyncHandler(async (req, res) => {
-    const { email, password } = req.body;
+  const { email, password } = req.body;
 
-    // Find user by email
-    const user = await User.findOne({ email });
-    if (!user) throw new ApiError(401, "Invalid email or password");
+  // Find user by email
+  const user = await User.findOne({ email });
+  if (!user) throw new ApiError(401, "Invalid email or password");
 
-    // Verify password (Plain text comparison; Hashing is recommended)
-    if (user.password !== password) throw new ApiError(401, "Invalid email or password");
+  // ✅ Verify password with bcrypt
+  const isMatch = await user.comparePassword(password);
+  if (!isMatch) throw new ApiError(401, "Invalid email or password");
 
-    // Generate JWT Token
-    const token = jwt.sign(
-        { id: user._id, role: user.role },
-        process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: process.env.ACCESS_TOKEN_EXPIRY || "1h" }
-    );
+  // Generate JWT Token
+  const token = jwt.sign(
+    { id: user._id, role: user.role },
+    process.env.ACCESS_TOKEN_SECRET,
+    { expiresIn: process.env.ACCESS_TOKEN_EXPIRY || "1h" }
+  );
 
-    res.json(new ApiResponse(200, { token, role: user.role,username: user.username }, "Login successful"));
+  res.json(
+    new ApiResponse(200, { token, role: user.role, username: user.username }, "Login successful")
+  );
 });
+
 
 // Search users by username
 export const searchUsers = asyncHandler(async (req, res) => {
-    const { username } = req.query;
-  
-    const users = await User.find({
-      username: { $regex: username, $options: "i" }, // case-insensitive partial match
-    });
-  
-    res.json(new ApiResponse(200, users, "Users fetched successfully"));
-  });
+  const { username } = req.query;
+
+  const users = await User.find({
+    username: { $regex: username, $options: "i" },
+  }).select("-password");
+
+  res.json(new ApiResponse(200, users, "Users fetched successfully"));
+});
   
